@@ -13,10 +13,9 @@ interface StorePropsType {
 
 function Store({ children }: StorePropsType) {
   const [quizStep, setQuizStep] = useState<QuizStepType>('HOME');
-  const [quizData, setQuizData] = useState<ApiResponseType>();
+  const [quizData, setQuizData] = useState<ApiResponseType | null>(null);
   const [quizAnswers, setQuizAnswers] = useState<string[]>([]);
   const [quizIndex, setQuizIndex] = useState<number>(0);
-  const [time, setTime] = useState<number>(0);
   const [selectedAnswer, setSelectedAnswer] = useState<string>('');
   const [selectedAnswersArray, setSelectedAnswersArray] = useState<string[]>(
     [],
@@ -52,6 +51,14 @@ function Store({ children }: StorePropsType) {
     }
   }, [quizIndex, selectedAnswersArray, selectedAnswer, quizData, answerChecks]);
 
+  const handleClickReset = useCallback(() => {
+    setQuizStep('HOME');
+    setQuizIndex(0);
+    setSelectedAnswer('');
+    setSelectedAnswersArray([]);
+    setAnswerChecks([]);
+  }, []);
+
   return (
     <QuizContext.Provider
       value={{
@@ -60,16 +67,15 @@ function Store({ children }: StorePropsType) {
         quizIndex,
         selectedAnswer,
         answerChecks,
-        time,
         quizAnswers,
         setQuizStep,
         setQuizData,
         setQuizIndex,
         setSelectedAnswer,
-        setTime,
         setQuizAnswers,
         handleChange,
         handleClickNext,
+        handleClickReset,
       }}
     >
       {children}

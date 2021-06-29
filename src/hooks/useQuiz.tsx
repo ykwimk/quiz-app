@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect } from 'react';
 import _ from 'lodash';
-import { ResultsDataType } from '../types';
 import { useQuizContext } from '../store';
+import { ResultsDataType } from '../types';
 
 function useQuiz() {
   const {
@@ -9,15 +9,15 @@ function useQuiz() {
     quizIndex,
     quizAnswers,
     selectedAnswer,
-    setQuizData,
     setSelectedAnswer,
     setQuizAnswers,
+    setQuizData,
     handleChange,
     handleClickNext,
   } = useQuizContext();
 
-  const initData = useCallback(() => {
-    const API = `https://opentdb.com/api.php?amount=8&category=27&difficulty=easy&type=multiple`;
+  const fetchData = useCallback(() => {
+    const API = `https://opentdb.com/api.php?amount=3&category=27&difficulty=easy&type=multiple`;
     fetch(API)
       .then((response) => response.json())
       .then((data) => {
@@ -41,14 +41,13 @@ function useQuiz() {
   }, [setQuizData, setQuizAnswers]);
 
   useEffect(() => {
-    initData();
-  }, [initData]);
+    if (_.isEmpty(quizData)) fetchData();
+  }, [quizData, fetchData]);
 
   return {
     quizData,
     quizIndex,
     selectedAnswer,
-    initData,
     setSelectedAnswer,
     handleChange,
     handleClickNext,
