@@ -37,7 +37,7 @@ function useQuiz() {
           alert('API Error!');
         }
       })
-      .catch((error) => alert(error));
+      .catch((error) => console.log(error));
   }, [setQuizData, setQuizAnswers]);
 
   useEffect(() => {
