@@ -14,6 +14,7 @@ interface StorePropsType {
 function Store({ children }: StorePropsType) {
   const [quizStep, setQuizStep] = useState<QuizStepType>('HOME');
   const [quizData, setQuizData] = useState([]);
+  const [quizAnswers, setQuizAnswers] = useState([]);
   const [quizIndex, setQuizIndex] = useState(0);
   const [selectedAnswer, setSelectedAnswer] = useState<string>('');
   const [selectedAnswersArray, setSelectedAnswersArray] = useState<string[]>(
@@ -46,14 +47,16 @@ function Store({ children }: StorePropsType) {
         quizData,
         quizIndex,
         selectedAnswer,
+        answerLength,
+        time,
+        quizAnswers,
         setQuizStep,
         setQuizData,
         setQuizIndex,
         setSelectedAnswer,
-        handleClickNext,
-        answerLength,
-        time,
         setTime,
+        setQuizAnswers,
+        handleClickNext,
       }}
     >
       {children}

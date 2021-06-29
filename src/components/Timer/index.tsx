@@ -7,6 +7,7 @@ function Timer() {
   const { time } = useTimer();
   return (
     <TimerLayout>
+      경과 시간:{' '}
       {moment().hour(0).minute(0).second(time).format('HH : mm : ss')}
     </TimerLayout>
   );
@@ -15,7 +16,7 @@ function Timer() {
 export default Timer;
 
 const TimerLayout = styled.span`
-  font-size: 20px;
+  font-size: 18px;
   font-weight: 500;
   text-align: center;
 `;

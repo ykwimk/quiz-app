@@ -1,4 +1,5 @@
 import React, { useCallback, useEffect } from 'react';
+import _ from 'lodash';
 import { useQuizContext } from '../store';
 
 function useQuiz() {
@@ -9,15 +10,26 @@ function useQuiz() {
     setQuizData,
     setSelectedAnswer,
     handleClickNext,
+    quizAnswers,
+    setQuizAnswers,
   } = useQuizContext();
 
   const initData = useCallback(() => {
     const API = `https://opentdb.com/api.php?amount=8&category=27&difficulty=easy&type=multiple`;
     fetch(API)
       .then((response) => response.json())
-      .then((data) => setQuizData(data))
+      .then((data) => {
+        const { results } = data;
+        const resultsArray = results.map((item: any) => {
+          const { incorrect_answers, correct_answer } = item;
+          return _.shuffle([].concat(...incorrect_answers, correct_answer));
+        });
+
+        setQuizData(data);
+        setQuizAnswers(resultsArray);
+      })
       .catch((error) => console.log(error));
-  }, [setQuizData]);
+  }, [setQuizData, setQuizAnswers]);
 
   const handleChange = useCallback(
     (e) => {
@@ -39,6 +51,7 @@ function useQuiz() {
     setSelectedAnswer,
     handleChange,
     handleClickNext,
+    quizAnswers,
   };
 }
 

@@ -10,24 +10,26 @@ import {
 } from '@material-ui/core';
 import styled from 'styled-components';
 import useQuiz from '../../hooks/useQuiz';
-import Timer from '../Timer';
 
 import CircularProgress from '@material-ui/core/CircularProgress';
 
 function Quiz() {
-  const { quizData, quizIndex, selectedAnswer, handleChange, handleClickNext } =
-    useQuiz();
+  const {
+    quizData,
+    quizIndex,
+    quizAnswers,
+    selectedAnswer,
+    handleChange,
+    handleClickNext,
+  } = useQuiz();
 
   if (_.isEmpty(quizData)) return <LoadingIcon />;
 
-  const { category, question, incorrect_answers, correct_answer } =
-    quizData.results[quizIndex];
-
-  const answers = [].concat(...incorrect_answers, correct_answer);
+  const { category, question, correct_answer } = quizData.results[quizIndex];
 
   const AnswerOx = selectedAnswer === correct_answer ? 'O' : 'X';
 
-  console.log(quizData.results[quizIndex]);
+  const quizAnswersArray = quizAnswers[quizIndex];
 
   return (
     <QuizBox component="div">
@@ -51,8 +53,8 @@ function Quiz() {
             value={selectedAnswer}
             onChange={handleChange}
           >
-            {answers &&
-              answers.map((value, index) => {
+            {quizAnswersArray &&
+              quizAnswersArray.map((value: any, index: any) => {
                 return (
                   <FormControlLabel
                     key={index}
