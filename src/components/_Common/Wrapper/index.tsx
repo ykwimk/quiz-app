@@ -1,12 +1,12 @@
 import React from 'react';
 import { Paper } from '@material-ui/core';
 import styled from 'styled-components';
-import { useQuizContext } from '../../store';
-import { QuizStepType } from '../../types';
+import { useQuizContext } from '../../../store';
+import { QuizStepType } from '../../../types';
 import Header from '../Header';
-import Home from '../Home';
-import Quiz from '../Quiz';
-import Result from '../Result';
+import Home from '../../Home';
+import Quiz from '../../Quiz';
+import Result from '../../Result';
 
 function Wrapper() {
   const { quizStep } = useQuizContext();

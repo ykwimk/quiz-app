@@ -3,7 +3,7 @@ import { useQuizContext } from '../store';
 
 function useTimer() {
   const { quizStep } = useQuizContext();
-  const [time, setTime] = useState(0);
+  const [time, setTime] = useState<number>(0);
 
   useEffect(() => {
     if (quizStep !== 'QUIZ') return;

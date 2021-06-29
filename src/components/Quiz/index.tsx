@@ -27,23 +27,22 @@ function Quiz() {
 
   const { category, question, correct_answer } = quizData.results[quizIndex];
 
-  const AnswerOx = selectedAnswer === correct_answer ? 'O' : 'X';
-
   const quizAnswersArray = quizAnswers[quizIndex];
 
   return (
     <QuizBox component="div">
-      {/* <Timer /> */}
-      <QuizCategory>Category: {category}</QuizCategory>
+      <QuizCategory>
+        <span>Category: {category}</span>
+        {selectedAnswer !== '' && (
+          <CheckAnswer
+            selectedAnswer={selectedAnswer}
+            correctAnswer={correct_answer}
+          >{`${selectedAnswer === correct_answer ? 'O' : 'X'}`}</CheckAnswer>
+        )}
+      </QuizCategory>
       <QuizTitle>
         <span>{`${quizIndex + 1}. `}</span>
         {question}{' '}
-        {selectedAnswer !== '' && (
-          <TitleOx
-            selectedAnswer={selectedAnswer}
-            correctAnswer={correct_answer}
-          >{`${AnswerOx}`}</TitleOx>
-        )}
       </QuizTitle>
       <FormWrapper>
         <FormControl component="fieldset">
@@ -54,7 +53,7 @@ function Quiz() {
             onChange={handleChange}
           >
             {quizAnswersArray &&
-              quizAnswersArray.map((value: any, index: any) => {
+              quizAnswersArray.map((value: string, index: number) => {
                 return (
                   <FormControlLabel
                     key={index}
@@ -86,7 +85,8 @@ const LoadingIcon = styled(CircularProgress)`
   position: absolute;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%);
+  margin-left: -20px;
+  margin-top: -20px;
 `;
 
 const QuizBox = styled(Box)`
@@ -94,6 +94,9 @@ const QuizBox = styled(Box)`
 `;
 
 const QuizCategory = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   margin-top: 20px;
   font-size: 21px;
   font-weight: 500;
@@ -106,7 +109,11 @@ const QuizTitle = styled.div`
   font-weight: 500;
 `;
 
-const TitleOx = styled.span<{ selectedAnswer: string; correctAnswer: string }>`
+const CheckAnswer = styled.span<{
+  selectedAnswer: string;
+  correctAnswer: string;
+}>`
+  font-size: 30px;
   font-weight: bold;
   color: ${(props) =>
     props.selectedAnswer === props.correctAnswer ? 'blue' : 'red'};

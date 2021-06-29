@@ -2,7 +2,7 @@ import React from 'react';
 import _ from 'lodash';
 import styled from 'styled-components';
 import { AppBar } from '@material-ui/core';
-import { useQuizContext } from '../../store';
+import { useQuizContext } from '../../../store';
 import Timer from '../Timer';
 
 function Header() {

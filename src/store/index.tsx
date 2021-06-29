@@ -1,5 +1,5 @@
 import React, { createContext, useCallback, useContext, useState } from 'react';
-import { QuizStepType } from '../types';
+import { ApiResponseType, QuizStepType } from '../types';
 
 export const QuizContext = createContext({} as any);
 
@@ -13,32 +13,44 @@ interface StorePropsType {
 
 function Store({ children }: StorePropsType) {
   const [quizStep, setQuizStep] = useState<QuizStepType>('HOME');
-  const [quizData, setQuizData] = useState([]);
-  const [quizAnswers, setQuizAnswers] = useState([]);
-  const [quizIndex, setQuizIndex] = useState(0);
+  const [quizData, setQuizData] = useState<ApiResponseType>();
+  const [quizAnswers, setQuizAnswers] = useState<string[]>([]);
+  const [quizIndex, setQuizIndex] = useState<number>(0);
+  const [time, setTime] = useState<number>(0);
   const [selectedAnswer, setSelectedAnswer] = useState<string>('');
   const [selectedAnswersArray, setSelectedAnswersArray] = useState<string[]>(
     [],
   );
-  const [time, setTime] = useState(0);
-  const [answerLength, setAnswerLength] = useState<boolean[]>([]);
+  const [answerChecks, setAnswerChecks] = useState<boolean[]>([]);
+
+  const handleChange = useCallback(
+    (e) => {
+      const { value } = e.target;
+      setSelectedAnswer(value);
+    },
+    [setSelectedAnswer],
+  );
 
   const handleClickNext = useCallback(() => {
-    const { results } = quizData as any;
+    const { results } = quizData as ApiResponseType;
     const array = selectedAnswersArray;
-    const aaArray = answerLength;
+    const answerChecksArray = answerChecks;
+
     array.push(selectedAnswer);
-    aaArray.push(selectedAnswer === results[quizIndex].correct_answer);
-    setSelectedAnswersArray(array as any);
+    answerChecksArray.push(
+      selectedAnswer === results[quizIndex].correct_answer,
+    );
+
+    setSelectedAnswersArray(array as string[]);
     setSelectedAnswer('');
-    setAnswerLength(aaArray);
+    setAnswerChecks(answerChecksArray);
 
     if (results.length - 1 > quizIndex) {
       setQuizIndex(quizIndex + 1);
     } else {
       setQuizStep('RESULT');
     }
-  }, [quizIndex, selectedAnswersArray, selectedAnswer, quizData, answerLength]);
+  }, [quizIndex, selectedAnswersArray, selectedAnswer, quizData, answerChecks]);
 
   return (
     <QuizContext.Provider
@@ -47,7 +59,7 @@ function Store({ children }: StorePropsType) {
         quizData,
         quizIndex,
         selectedAnswer,
-        answerLength,
+        answerChecks,
         time,
         quizAnswers,
         setQuizStep,
@@ -56,6 +68,7 @@ function Store({ children }: StorePropsType) {
         setSelectedAnswer,
         setTime,
         setQuizAnswers,
+        handleChange,
         handleClickNext,
       }}
     >

@@ -1,17 +1,19 @@
 import React, { useCallback, useEffect } from 'react';
 import _ from 'lodash';
+import { ResultsDataType } from '../types';
 import { useQuizContext } from '../store';
 
 function useQuiz() {
   const {
     quizData,
     quizIndex,
+    quizAnswers,
     selectedAnswer,
     setQuizData,
     setSelectedAnswer,
-    handleClickNext,
-    quizAnswers,
     setQuizAnswers,
+    handleChange,
+    handleClickNext,
   } = useQuizContext();
 
   const initData = useCallback(() => {
@@ -19,25 +21,24 @@ function useQuiz() {
     fetch(API)
       .then((response) => response.json())
       .then((data) => {
-        const { results } = data;
-        const resultsArray = results.map((item: any) => {
-          const { incorrect_answers, correct_answer } = item;
-          return _.shuffle([].concat(...incorrect_answers, correct_answer));
-        });
+        const { response_code } = data;
+        if (response_code === 0) {
+          const { results } = data;
+          const resultsArray = results.map((item: ResultsDataType) => {
+            const { incorrect_answers, correct_answer } = item;
+            return _.shuffle(
+              ([] as string[]).concat(...incorrect_answers, correct_answer),
+            );
+          });
 
-        setQuizData(data);
-        setQuizAnswers(resultsArray);
+          setQuizData(data);
+          setQuizAnswers(resultsArray);
+        } else {
+          alert('API Error!');
+        }
       })
-      .catch((error) => console.log(error));
+      .catch((error) => alert(error));
   }, [setQuizData, setQuizAnswers]);
-
-  const handleChange = useCallback(
-    (e) => {
-      const { value } = e.target;
-      setSelectedAnswer(value);
-    },
-    [setSelectedAnswer],
-  );
 
   useEffect(() => {
     initData();

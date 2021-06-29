@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import moment from 'moment';
-import useTimer from '../../hooks/useTimer';
+import useTimer from '../../../hooks/useTimer';
 
 function Timer() {
   const { time } = useTimer();
