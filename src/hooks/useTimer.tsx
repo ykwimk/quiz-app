@@ -1,10 +1,13 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useQuizContext } from '../store';
 
 function useTimer() {
-  const { time, setTime } = useQuizContext();
+  const { quizStep } = useQuizContext();
+  const [time, setTime] = useState(0);
 
   useEffect(() => {
+    if (quizStep !== 'QUIZ') return;
+
     const timer = setInterval(() => {
       setTime(time + 1);
     }, 1000);
@@ -12,11 +15,9 @@ function useTimer() {
     return () => {
       clearInterval(timer);
     };
-  }, [time, setTime]);
+  }, [time, setTime, quizStep]);
 
-  return {
-    time,
-  };
+  return { time };
 }
 
 export default useTimer;

@@ -1,28 +1,41 @@
 import React from 'react';
 import styled from 'styled-components';
-import moment from 'moment';
+import { Box } from '@material-ui/core';
 import useResult from '../../hooks/useResult';
 
 function Result() {
-  const { time, correctAnswerLength, incorrectAnswerLength } = useResult();
-  console.log(time);
+  const { correctAnswerLength, incorrectAnswerLength } = useResult();
   return (
-    <ResultLayout>
-      <div>
-        퀴즈를 마칠 떄까지 소요된 시간:{' '}
-        {moment().hour(0).minute(0).second(time).format('HH : mm : ss')}
-      </div>
-      <div>정답 개수: {correctAnswerLength}개</div>
-      <div>오답 개수: {incorrectAnswerLength}개</div>
-    </ResultLayout>
+    <ResultBox>
+      <ResultContent>
+        <ResultText textType="correct">
+          정답 개수: {correctAnswerLength}개
+        </ResultText>
+        <ResultText textType="incorrect">
+          오답 개수: {incorrectAnswerLength}개
+        </ResultText>
+      </ResultContent>
+    </ResultBox>
   );
 }
 
 export default Result;
 
-const ResultLayout = styled.div`
-  position: fixed;
+const ResultBox = styled(Box)`
+  height: 100%;
+`;
+
+const ResultContent = styled.div`
+  position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+`;
+
+const ResultText = styled.div<{ textType: string }>`
+  font-size: 24px;
+  font-weight: 500;
+  margin-bottom: 15px;
+  color: ${(props) =>
+    props.textType === 'correct' ? '#1976d2' : 'rgb(220, 0, 78)'};
 `;

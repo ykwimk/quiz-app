@@ -51,9 +51,9 @@ function Store({ children }: StorePropsType) {
         setQuizIndex,
         setSelectedAnswer,
         handleClickNext,
-        setTime,
-        time,
         answerLength,
+        time,
+        setTime,
       }}
     >
       {children}

@@ -14,7 +14,7 @@ function Timer() {
 
 export default Timer;
 
-const TimerLayout = styled.div`
+const TimerLayout = styled.span`
   font-size: 20px;
   font-weight: 500;
   text-align: center;

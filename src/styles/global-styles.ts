@@ -10,6 +10,7 @@ const GlobalStyle = createGlobalStyle`
     width: 100%;
     height: 100%;
     overflow: hidden;
+    background-color: hsla(0,0%,94.1%,.884);
   }
 `;
 
