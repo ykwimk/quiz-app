@@ -1,46 +1,87 @@
-# Getting Started with Create React App
+# Quiz-App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## 📂 How to run
 
-## Available Scripts
+```
+  1. npm install
 
-In the project directory, you can run:
+  2. npm run start
+```
 
-### `yarn start`
+<br />
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## 📂 File Structure
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+```
+├── components
+|      ├── _Common : 공통으로 쓸 수 있는 UI Component
+|      |      ├── Header
+|      |      ├── Timer
+|      |      └── Wrapper
+|      ├── Home : 메인 Component
+|      ├── Quiz : 퀴즈 Component
+|      └── Result : 결과 Component
+|
+├── hooks
+|
+├── store
+|
+├── styles
+|
+├── types
+|
+├── App.js
+|
+├── index.js
+|
+├── package.json
+|
+└── README.md
+```
 
-### `yarn test`
+<br />
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## 📂 Stack
 
-### `yarn build`
+Language
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+- Typescript
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+Library
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+- React
 
-### `yarn eject`
+UI-Component
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+- Material-UI
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+Communication
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+- Fetch
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+State Container
 
-## Learn More
+- Context API
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+Style
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+- Styled-Components
+
+Utility
+
+- Lodash
+- Moment
+- Eslint-standard, Prettier
+
+<br />
+
+## 📂 Component Pattern
+
+- Custom Hook 패턴 사용.
+- Custom Hook에 많은 제어권을 줘서, Global State와 Local State, 대부분의 로직들을 그 안에서 처리하는 방법.
+
+<br />
+
+## 📂 Comment
+
+> "많은 페이지가 필요하지 않다" 라고 판단하여, 따로 Router를 사용하지 않고 전역 상태에 따라 컴포넌트를 렌더링 하는 방법을 사용했습니다.
